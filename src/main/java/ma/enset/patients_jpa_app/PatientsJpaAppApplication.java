@@ -1,9 +1,7 @@
 package ma.enset.patients_jpa_app;
 
-import ma.enset.patients_jpa_app.entities.Medecin;
-import ma.enset.patients_jpa_app.entities.Patient;
-import ma.enset.patients_jpa_app.entities.RandezVous;
-import ma.enset.patients_jpa_app.entities.StatusRDV;
+import ma.enset.patients_jpa_app.entities.*;
+import ma.enset.patients_jpa_app.repository.ConsultationRepository;
 import ma.enset.patients_jpa_app.repository.MedecinRepository;
 import ma.enset.patients_jpa_app.repository.PatientRepository;
 import ma.enset.patients_jpa_app.repository.RandezVousRepository;
@@ -25,7 +23,7 @@ public class PatientsJpaAppApplication {
 
 
     @Bean
-    CommandLineRunner start(PatientRepository patientRepository, MedecinRepository medecinRepository, RandezVousRepository  randezVousRepository){
+    CommandLineRunner start(PatientRepository patientRepository, MedecinRepository medecinRepository, RandezVousRepository  randezVousRepository, ConsultationRepository consultationRepository){
         return args -> {
            //patientRepository.save(new Patient(null, "hassan", new Date(),true, null ));
 //            Stream.of("hajar", "najat", "khadija").forEach(
@@ -59,6 +57,15 @@ public class PatientsJpaAppApplication {
             rdv.setMedecin(medecin);
             rdv.setPatient(patient1);
             randezVousRepository.save(rdv);
+
+            RandezVous rdv1 = randezVousRepository.findById(1L).orElse(null);
+
+            Consultation consult = new Consultation();
+            consult.setDateConsultation(new Date());
+            consult.setRapportConsultation("tout est normal");
+            consult.setRandezVous(rdv1);
+            //rdv1.setConsultation(consult);
+            consultationRepository.save(consult);
 
         };
     }

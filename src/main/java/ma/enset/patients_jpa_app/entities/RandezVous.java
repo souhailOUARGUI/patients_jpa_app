@@ -14,6 +14,7 @@ public class RandezVous {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date dateRandezVous;
+    @Enumerated(EnumType.STRING)
     private StatusRDV statusRdv;
 
 
