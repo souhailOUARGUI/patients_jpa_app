@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
+import java.util.stream.Stream;
 
 @SpringBootApplication
 public class PatientsJpaAppApplication {
@@ -21,8 +22,17 @@ public class PatientsJpaAppApplication {
     @Bean
     CommandLineRunner start(PatientRepository patientRepository){
         return args -> {
-           patientRepository.save(new Patient(null, "hassan", new Date(),true, null ));
-
+           //patientRepository.save(new Patient(null, "hassan", new Date(),true, null ));
+            Stream.of("hajar", "najat", "khadija").forEach(
+                //    name -> patientRepository.save(new Patient(null, name, new Date(),true, null ))
+                    name -> {
+                        Patient patient = new Patient();
+                        patient.setNom(name);
+                        patient.setDateNaissance(new Date());
+                        patient.setMalade(false);
+                        patientRepository.save(patient);
+                    }
+            );
         };
     }
 }
