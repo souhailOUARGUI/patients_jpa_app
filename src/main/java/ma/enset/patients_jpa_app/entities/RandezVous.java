@@ -18,7 +18,7 @@ public class RandezVous {
     private Medecin medecin;
     @ManyToOne
     private Patient patient;
-    @OneToOne(mappedBy = "randezVous")
+    @OneToOne
     private Consultation consultation;
 
 }
