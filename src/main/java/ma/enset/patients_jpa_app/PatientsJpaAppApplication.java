@@ -2,8 +2,11 @@ package ma.enset.patients_jpa_app;
 
 import ma.enset.patients_jpa_app.entities.Medecin;
 import ma.enset.patients_jpa_app.entities.Patient;
+import ma.enset.patients_jpa_app.entities.RandezVous;
+import ma.enset.patients_jpa_app.entities.StatusRDV;
 import ma.enset.patients_jpa_app.repository.MedecinRepository;
 import ma.enset.patients_jpa_app.repository.PatientRepository;
+import ma.enset.patients_jpa_app.repository.RandezVousRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +25,7 @@ public class PatientsJpaAppApplication {
 
 
     @Bean
-    CommandLineRunner start(PatientRepository patientRepository, MedecinRepository medecinRepository){
+    CommandLineRunner start(PatientRepository patientRepository, MedecinRepository medecinRepository, RandezVousRepository  randezVousRepository){
         return args -> {
            //patientRepository.save(new Patient(null, "hassan", new Date(),true, null ));
 //            Stream.of("hajar", "najat", "khadija").forEach(
@@ -36,16 +39,26 @@ public class PatientsJpaAppApplication {
 //                    }
 //            );
 
-            Stream.of("salma", "souhail", "hanane").forEach(
-                    //    name -> patientRepository.save(new Patient(null, name, new Date(),true, null ))
-                    name -> {
-                        Medecin medecin = new Medecin();
-                        medecin.setNom(name);
-                        medecin.setEmail(name+"@gmail.com");
-                        medecin.setSpecialite("Cardiologie");
-                        medecinRepository.save(medecin);
-                    });
+//            Stream.of("salma", "souhail", "hanane").forEach(
+//                    //    name -> patientRepository.save(new Patient(null, name, new Date(),true, null ))
+//                    name -> {
+//                        Medecin medecin = new Medecin();
+//                        medecin.setNom(name);
+//                        medecin.setEmail(name+"@gmail.com");
+//                        medecin.setSpecialite("Cardiologie");
+//                        medecinRepository.save(medecin);
+//                    });
 
+            Patient patient1 = patientRepository.findByNom("najat");
+
+            Medecin medecin = medecinRepository.findByNom("salma");
+
+            RandezVous rdv = new RandezVous();
+            rdv.setDateRandezVous(new Date());
+            rdv.setStatusRdv(StatusRDV.PENDING);
+            rdv.setMedecin(medecin);
+            rdv.setPatient(patient1);
+            randezVousRepository.save(rdv);
 
         };
     }
