@@ -14,6 +14,9 @@ public class RandezVous {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date dateRandezVous;
+    private StatusRDV statusRdv;
+
+
     @ManyToOne
     private Medecin medecin;
     @ManyToOne

@@ -1,4 +1,7 @@
 package ma.enset.patients_jpa_app.entities;
 
-public class StatusRDV {
+public enum StatusRDV {
+    PENDING,
+    CANCELED,
+    DONE
 }
